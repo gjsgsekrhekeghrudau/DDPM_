@@ -37,6 +37,9 @@ dataloader = DataLoader(dataset, batch_size=BATCH_SIZE * 2, shuffle=True, drop_l
 
 diff = diffusion.Diffusion(DIFFUSION_STEPS, IMG_SIZE, DEVICE)
 
+for imgs, _ in dataloader:
+    break
+
 for epoch in torch.arange(1, 100, 2):
     MODEL_PATH = f'../trained_models/ddpm_epoch{epoch}.pth'
     print(MODEL_PATH + ':', end=' ')
@@ -49,14 +52,8 @@ for epoch in torch.arange(1, 100, 2):
     a = torch.randn(BATCH_SIZE, 1, 1, 1)
     b = torch.randn(BATCH_SIZE, 1, 1, 1)
 
-    lss = []
-    for i, (imgs, _) in enumerate(dataloader):
-        if i >= 50:
-            break
-        x1 = imgs[:BATCH_SIZE]
-        x2 = imgs[BATCH_SIZE:]
+    x1 = imgs[:BATCH_SIZE]
+    x2 = imgs[BATCH_SIZE:]
 
-        ls = LinearityScore(a, b, x1, x2, t, noise)
-        lss.append(ls)
-
-    print(f'LS = {sum(lss) / len(lss):.4f}')
+    ls = LinearityScore(a, b, x1, x2, t, noise)
+    print(f'LS = {ls:.4f}')

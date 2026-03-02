@@ -13,7 +13,7 @@ MODEL_PATH = f'trained_models/ddpm_epoch{EPOCH}.pth'
 
 IMG_SIZE = 64
 TIME_DIM = 256
-T = 750
+T = 20
 
 EPOCHS = 10
 LEARNING_RATE = 1e-3
@@ -65,4 +65,4 @@ for epoch in range(EPOCHS):
 torch.save({
     'model_state': classifier.state_dict(),
     'loss_history': loss_history
-}, f'classifiers/t={T}.pth')
+}, f'classifiers/on_epoch_{EPOCH}.pth')
