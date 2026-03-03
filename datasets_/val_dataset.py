@@ -5,8 +5,8 @@ import os
 
 
 class ImageDataset(Dataset):
-    def __init__(self, img_size, num_classes):
-        self.root = '../ImageNetDiffusion/datasets_/archive/val.X'
+    def __init__(self, img_size, num_classes, dataset_path):
+        self.root = f'{dataset_path}/val.X'
         self.num_classes = num_classes
         self.transform = transforms.Compose([
             transforms.Resize(img_size),

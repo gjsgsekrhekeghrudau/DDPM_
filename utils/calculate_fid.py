@@ -14,7 +14,7 @@ TIME_DIM = 256
 DIFFUSION_STEPS = 1000
 NUM_SAMPLES = 128
 
-dataset = ImageDataset(IMG_SIZE, num_classes=100, dataset_path='../../ImageNetDiffusion/datasets_/archive')
+dataset = ImageDataset(IMG_SIZE, num_classes=100, dataset_path='../datasets_/archive')
 dataloader = DataLoader(dataset, batch_size=NUM_SAMPLES, shuffle=True, drop_last=True)
 
 model = attention_unet.UNet(time_dim=TIME_DIM).to(DEVICE)

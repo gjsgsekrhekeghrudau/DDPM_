@@ -11,7 +11,7 @@ DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 LOAD_MODEL = False
 LAST_EPOCH = 0
 MODEL_PATH = 'trained_models'
-IMG_DIR = '../ImageNetDiffusion/datasets_/archive'
+IMG_DIR = 'datasets_/archive'
 
 IMG_SIZE = 64
 TIME_DIM = 256

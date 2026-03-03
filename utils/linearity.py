@@ -24,7 +24,7 @@ def LinearityScore(a, b, x1, x2, t, noise):
 torch.manual_seed(42)
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-IMG_DIR = '../../ImageNetDiffusion/datasets_/archive'
+IMG_DIR = '../datasets_/archive'
 IMG_SIZE = 64
 TIME_DIM = 256
 DIFFUSION_STEPS = 1000
@@ -40,7 +40,8 @@ diff = diffusion.Diffusion(DIFFUSION_STEPS, IMG_SIZE, DEVICE)
 for imgs, _ in dataloader:
     break
 
-for epoch in torch.arange(1, 100, 2):
+lss = []
+for epoch in range(1, 100):
     MODEL_PATH = f'../trained_models/ddpm_epoch{epoch}.pth'
     print(MODEL_PATH + ':', end=' ')
 
@@ -56,4 +57,7 @@ for epoch in torch.arange(1, 100, 2):
     x2 = imgs[BATCH_SIZE:]
 
     ls = LinearityScore(a, b, x1, x2, t, noise)
+    lss.append(ls)
     print(f'LS = {ls:.4f}')
+
+torch.save({'lss': torch.FloatTensor(lss)}, 'ls.pth')
