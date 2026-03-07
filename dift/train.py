@@ -5,13 +5,16 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-lss = torch.load('../utils/ls.pth', map_location=DEVICE)['lss']
+# lss = torch.load('../utils/files/ls.pth', map_location=DEVICE)['lss']
 # EPOCH = torch.argmin(lss)  # Diffusion epoch with min LS
-EPOCH = torch.argmax(lss)  # Diffusion epoch with max LS
-MODEL_PATH = f'../trained_models/ddpm_epoch{EPOCH}.pth'
+# EPOCH = torch.argmax(lss)  # Diffusion epoch with max LS
+EPOCH = 199
+# MODEL_PATH = f'../trained_models/ddpm_epoch{EPOCH}.pth'
+MODEL_PATH = f'../overfit/ddpm_epoch{EPOCH}.pth'
 
 IMG_SIZE = 64
 TIME_DIM = 256
@@ -43,7 +46,7 @@ for epoch in range(EPOCHS):
     losses = []
     total_loss = 0
 
-    for imgs, labels in dataloader:
+    for imgs, labels in tqdm(dataloader):
         imgs = imgs.to(DEVICE)
         labels = labels.to(DEVICE)
         t = torch.full((BATCH_SIZE, ), T, device=DEVICE)

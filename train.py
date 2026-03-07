@@ -8,22 +8,22 @@ from tqdm import tqdm
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-LOAD_MODEL = False
-LAST_EPOCH = 0
+LOAD_MODEL = True
+LAST_EPOCH = 99
 MODEL_PATH = 'trained_models'
-IMG_DIR = 'datasets_/archive'
+IMG_DIR = '../ImageNetDiffusion/datasets_/archive'
 
 IMG_SIZE = 64
 TIME_DIM = 256
 SAVE_EVERY = 100
 
-EPOCHS = 100
+EPOCHS = 200
 LEARNING_RATE = 3e-5
 BATCH_SIZE = 8
 
 DIFFUSION_STEPS = 1000
 
-dataset = ImageDataset(IMG_SIZE, 100, IMG_DIR)
+dataset = ImageDataset(IMG_SIZE, 3, IMG_DIR)
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
 
 model = attention_unet.UNet(time_dim=TIME_DIM).to(DEVICE)
@@ -54,4 +54,5 @@ for epoch in range(LAST_EPOCH + 1, EPOCHS):
         progress.set_postfix({'loss': loss.item()})
 
         if SAVE_EVERY > 0 and i > 0 and i % SAVE_EVERY == 0:
-            torch.save({'model_state': model.state_dict()}, f'{MODEL_PATH}/ddpm_epoch{epoch}.pth')
+            # torch.save({'model_state': model.state_dict()}, f'{MODEL_PATH}/ddpm_epoch{epoch}.pth')
+            torch.save({'model_state': model.state_dict()}, f'overfit/ddpm_epoch{epoch}.pth')

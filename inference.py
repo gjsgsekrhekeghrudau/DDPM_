@@ -4,7 +4,7 @@ import torch
 from torchvision import utils
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-MODEL_PATH = 'trained_models/ddpm_epoch99.pth'
+MODEL_PATH = 'overfit/ddpm_epoch199.pth'
 SAVE_PATH = 'samples/sample.png'
 IMG_SIZE = 64
 TIME_DIM = 256
@@ -16,5 +16,5 @@ model.load_state_dict(checkpoint['model_state'])
 
 diff = diffusion.Diffusion(DIFFUSION_STEPS, IMG_SIZE, DEVICE)
 
-samples = diff.sample(model, 16)
-utils.save_image(samples, SAVE_PATH, nrow=4, normalize=True)
+samples = diff.sample(model, 4)
+utils.save_image(samples, SAVE_PATH, nrow=2, normalize=True)

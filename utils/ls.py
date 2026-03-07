@@ -24,11 +24,11 @@ def LinearityScore(a, b, x1, x2, t, noise):
 torch.manual_seed(42)
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-IMG_DIR = '../datasets_/archive'
+IMG_DIR = '../../ImageNetDiffusion/datasets_/archive'
 IMG_SIZE = 64
 TIME_DIM = 256
 DIFFUSION_STEPS = 1000
-BATCH_SIZE = 100
+BATCH_SIZE = 25
 
 noise = torch.randn(BATCH_SIZE, 3, IMG_SIZE, IMG_SIZE)
 
@@ -49,7 +49,7 @@ for epoch in range(1, 100):
     checkpoint = torch.load(MODEL_PATH, map_location=DEVICE)
     model.load_state_dict(checkpoint['model_state'])
 
-    t = torch.randint(250, 750, (BATCH_SIZE,))
+    t = torch.randint(900, DIFFUSION_STEPS, (BATCH_SIZE,))
     a = torch.randn(BATCH_SIZE, 1, 1, 1)
     b = torch.randn(BATCH_SIZE, 1, 1, 1)
 
@@ -60,4 +60,4 @@ for epoch in range(1, 100):
     lss.append(ls)
     print(f'LS = {ls:.4f}')
 
-torch.save({'lss': torch.FloatTensor(lss)}, 'ls.pth')
+torch.save({'lss': torch.FloatTensor(lss)}, 'files/ls_at_high_t.pth')

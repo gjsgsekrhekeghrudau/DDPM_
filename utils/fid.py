@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-EPOCH = 99
+EPOCH = 97
 MODEL_PATH = f'../trained_models/ddpm_epoch{EPOCH}.pth'
 IMG_SIZE = 64
 TIME_DIM = 256
