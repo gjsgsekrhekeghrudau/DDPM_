@@ -1,0 +1,22 @@
+# Репозиторий для проверки гипотез
+
+### [datasets_](datasets_): все, что связано с датасетом
+### [dift](dift): все, что связано с классфикатором и скрытыми признаками U-Net
+### [models](models): все архитектуры, используемые в проекте
+### [overfit](overfit): папка с версиями переобученной на 3 классах диффузионной модели
+### [samples](samples): папка со сгенерированными изображениями
+### [trained_models](trained_models): папка с версиями обученной на 100 классах диффузионной модели 
+### [utils](utils): все для измерения метрик
+
+## Инструкции:
+Для дообучения диффузионной модели: [train.py](train.py)
+
+Для инференса: [inference.py](inference.py)
+
+Для обучения классификатора: [dift/train.py](dift%2Ftrain.py)
+
+Для инференса классификатора (измерение accuracy): [dift/inference.py](dift%2Finference.py)
+
+Для визуализации обобщаемости: [utils/visualization](utils%2Fvisualization)
+
+Для визуализации потерь классификатора: [dift/visualization/loss.py](dift%2Fvisualization%2Floss.py)
