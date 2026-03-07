@@ -58,7 +58,7 @@ for EPOCH in [199]:
     classifier.load_state_dict(checkpoint['model_state'])
 
     total_acc = []
-    for seed in range(10, 20):
+    for seed in range(0, 10):
         val_acc = accuracy(classifier, dataloader, diff, seed)
         total_acc.append(val_acc)
 
