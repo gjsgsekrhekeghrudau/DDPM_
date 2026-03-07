@@ -17,6 +17,6 @@
 
 Для инференса классификатора (измерение accuracy): [dift/inference.py](dift%2Finference.py)
 
-Для визуализации обобщаемости: [utils/visualization](utils%2Fvisualization)
+Для измерения/визуализации метрик обобщаемости: [utils](utils)
 
 Для визуализации потерь классификатора: [dift/visualization/loss.py](dift%2Fvisualization%2Floss.py)
