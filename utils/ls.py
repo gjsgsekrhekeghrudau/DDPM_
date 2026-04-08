@@ -24,7 +24,7 @@ def LinearityScore(a, b, x1, x2, t, noise):
 torch.manual_seed(42)
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-IMG_DIR = '../../ImageNetDiffusion/datasets_/archive'
+IMG_DIR = '../datasets_/archive'
 IMG_SIZE = 64
 TIME_DIM = 256
 DIFFUSION_STEPS = 1000
