@@ -1,4 +1,4 @@
-from models import attention_unet, diffusion, classifier
+from models import attention_unet, diffusion, classifier1
 from datasets_.train_dataset import ImageDataset
 
 import torch
@@ -18,7 +18,7 @@ MODEL_PATH = f'../overfit/ddpm_epoch{EPOCH}.pth'
 
 IMG_SIZE = 64
 TIME_DIM = 256
-T = 20
+T = 750
 
 EPOCHS = 10
 LEARNING_RATE = 1e-3
@@ -36,17 +36,20 @@ model.eval()
 
 diff = diffusion.Diffusion(DIFFUSION_STEPS, IMG_SIZE, DEVICE)
 
-classifier = classifier.Classifier(model, num_classes=len(dataset.classes)).to(DEVICE)
+classifier = classifier1.Classifier(model, num_classes=len(dataset.classes)).to(DEVICE)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(classifier.parameters(), lr=LEARNING_RATE, weight_decay=1e-4)
 
 loss_history = []
+report = {}
 
 for epoch in range(EPOCHS):
     losses = []
     total_loss = 0
 
-    for imgs, labels in tqdm(dataloader):
+    progress = tqdm(dataloader, desc=f'Epoch {epoch}')
+
+    for imgs, labels in progress:
         imgs = imgs.to(DEVICE)
         labels = labels.to(DEVICE)
         t = torch.full((BATCH_SIZE, ), T, device=DEVICE)
@@ -63,11 +66,14 @@ for epoch in range(EPOCHS):
         total_loss += loss.item()
         losses.append(loss.item())
 
+        report['loss'] = losses[-1]
+        progress.set_postfix(report)
+
     loss_history.append(losses)
 
-    print(f'Epoch {epoch}, Loss: {total_loss / len(dataloader):.4f}')
+    report['avg_loss'] = total_loss / len(dataloader)
 
-torch.save({
-    'model_state': classifier.state_dict(),
-    'loss_history': loss_history
-}, f'classifiers/on_epoch_{EPOCH}.pth')
+    torch.save({
+        'model_state': classifier.state_dict(),
+        'loss_history': loss_history
+    }, f'classifiers/t={T}.pth')

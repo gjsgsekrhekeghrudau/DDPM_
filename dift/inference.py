@@ -1,4 +1,4 @@
-from models import attention_unet, diffusion, classifier
+from models import attention_unet, diffusion, classifier1
 from datasets_.val_dataset import ImageDataset
 
 import torch
@@ -44,7 +44,7 @@ model = attention_unet.UNet(time_dim=TIME_DIM).to(DEVICE)
 
 diff = diffusion.Diffusion(DIFFUSION_STEPS, IMG_SIZE, DEVICE)
 
-classifier = classifier.Classifier(model, num_classes=len(dataset.classes)).to(DEVICE)
+classifier = classifier1.Classifier(model, num_classes=len(dataset.classes)).to(DEVICE)
 classifier.eval()
 
 for EPOCH in [199]:
